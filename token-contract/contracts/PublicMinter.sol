@@ -4,14 +4,12 @@ pragma solidity ^0.8.4;
 import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/utils/cryptography/MerkleProof.sol';
 
-import "@openzeppelin/contracts/utils/Strings.sol";
-
 import './TopSevenPlayer.sol';
 
 contract PublicMinter is Ownable {
   TopSevenPlayer private token;
   address private contractAddress;
-  bool public IS_FREE_MINT = false;
+  bool public IS_FREE_MINT = true;
   uint256 public BASE_PRICE = 1000000000 gwei;
 
   event Log(uint256 amount, uint256 gas);
@@ -33,7 +31,7 @@ contract PublicMinter is Ownable {
     uint256 tokenId
   ) public payable {
     if (!IS_FREE_MINT) {
-      require(msg.value >= BASE_PRICE, Strings.toString(BASE_PRICE));
+      require(msg.value >= BASE_PRICE, "Need to send more MATIC");
     }
     token.mint(to, tokenId, 1, '');
     emit Log(msg.value, gasleft());

@@ -36,8 +36,29 @@ describe('PublicMinter', function () {
   });
 
   describe('minting', async () => {
+    it('free mint successfully', async () => {
+      const account = accounts[0];
+
+      await minter.mint(account.address, 1);
+
+      const totalSupply = await token.totalSupply(1);
+      assert.equal(totalSupply, 1);
+      const balance = await token.balanceOf(account.address, 1);
+      assert.equal(balance, 1);
+    });
+
+    it('free mint failed', async () => {
+      const account = accounts[0];
+      await minter.setIsFreeMint(false);
+      minter
+        .mint(account.address, 1)
+        .should.be.rejectedWith('Need to send more MATIC');
+    });
+
     it('mint successfully', async () => {
       const account = accounts[0];
+
+      await minter.setIsFreeMint(false);
 
       const value = BASE_PRICE.toString();
       await minter.mint(account.address, 1, {
@@ -49,6 +70,20 @@ describe('PublicMinter', function () {
       assert.equal(totalSupply, 1);
       const balance = await token.balanceOf(account.address, 1);
       assert.equal(balance, 1);
+    });
+
+    it('mint failed due to not enough matic', async () => {
+      const account = accounts[0];
+
+      await minter.setIsFreeMint(false);
+
+      const value = (BASE_PRICE * 1e-3).toString(); // not enough
+      minter
+        .mint(account.address, 1, {
+          from: account.address,
+          value,
+        })
+        .should.be.rejectedWith('Need to send more MATIC');
     });
   });
 });
