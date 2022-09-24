@@ -1,0 +1,56 @@
+{
+  "functions": {
+    "source": "functions",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log"
+    ]
+  },
+  "hosting": [
+    {
+      "target": "production",
+      "public": "build",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "/meta/**",
+          "function": "meta"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "cleanUrls": true
+    },
+    {
+      "target": "staging",
+      "public": "build",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "/meta/**",
+          "function": "meta"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "cleanUrls": true
+    }
+  ],
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "functions": {
+      "port": 5001
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
+}

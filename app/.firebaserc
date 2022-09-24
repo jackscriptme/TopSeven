@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "topseven-363408"
+  },
+  "targets": {
+    "topseven-363408": {
+      "hosting": {
+        "staging": [
+          "staging-topseven"
+        ],
+        "production": [
+          "production-topseven"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

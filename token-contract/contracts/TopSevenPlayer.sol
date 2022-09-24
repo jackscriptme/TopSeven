@@ -20,7 +20,7 @@ contract TopSevenPlayer is Initializable, ERC1155Upgradeable, PausableUpgradeabl
     }
 
     function initialize() initializer public {
-        __ERC1155_init("https://staging-mirlphelyfeeline.web.app/meta/{id}");
+        __ERC1155_init("https://staging-topseven.web.app/meta/{id}");
         __Pausable_init();
         __AccessControl_init();
         __ERC1155Burnable_init();
