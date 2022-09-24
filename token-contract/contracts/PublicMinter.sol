@@ -10,9 +10,10 @@ contract PublicMinter is Ownable {
   TopSevenPlayer private token;
   address private contractAddress;
   bool public IS_FREE_MINT = true;
-  uint256 public BASE_PRICE = 1000000000 gwei;
+  uint256 public BASE_PRICE = 500000000 gwei;
 
   event Log(uint256 amount, uint256 gas);
+  event ResultsFromCall(bool success, bytes data);
 
   constructor() {}
 
@@ -48,7 +49,20 @@ contract PublicMinter is Ownable {
     token = TopSevenPlayer(_address);
   }
 
-  function setIsFreeMint(bool isFreeMint) public onlyOwner {
-    IS_FREE_MINT = isFreeMint;
+  function withdraw() external onlyOwner {
+    uint256 balance = address(this).balance;
+    require(balance > 0, 'No amount left to withdraw');
+
+    (bool success, bytes memory data) = (msg.sender).call{value: balance}('');
+    require(success, 'Withdrawal failed');
+    emit ResultsFromCall(success, data);
+  }
+
+  function setIsFreeMint(bool _isFreeMint) public onlyOwner {
+    IS_FREE_MINT = _isFreeMint;
+  }
+
+  function setBasePrice(uint256 _basePrice) public onlyOwner {
+    BASE_PRICE = _basePrice;
   }
 }
