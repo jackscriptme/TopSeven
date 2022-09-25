@@ -9,8 +9,6 @@ const tokenContractAddress = '0x45438E2F20EAcf63F00A3207e026222F70674C22';
 
 const { NETWORK_ID: networkId } = environments;
 
-console.log({ networkId });
-
 const useAccount = () => {
   const [account, setAccount] = useState(null);
   const [isInitialized, setIsInitialized] = useState(false);

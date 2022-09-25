@@ -1,14 +1,17 @@
 import { ThemeProvider, createTheme } from '@mui/material';
 
 import Navigation from './navigations';
+import { AppContextProvider } from './contexts/app.context';
 
 const theme = createTheme();
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Navigation />
-    </ThemeProvider>
+    <AppContextProvider>
+      <ThemeProvider theme={theme}>
+        <Navigation />
+      </ThemeProvider>
+    </AppContextProvider>
   );
 };
 
