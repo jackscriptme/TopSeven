@@ -1,21 +1,15 @@
-import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material';
 
-import useAccount from './hooks/useAccount';
+import Navigation from './navigations';
 
-function App() {
-  const { account, connectMetamaskWallet, mintNFT } = useAccount();
+const theme = createTheme();
+
+const App = () => {
   return (
-    <div className='App'>
-      {account ? (
-        <div>
-          Account: {account}
-          <button onClick={mintNFT}>Mint</button>
-        </div>
-      ) : (
-        <button onClick={connectMetamaskWallet}>connect wallet</button>
-      )}
-    </div>
+    <ThemeProvider theme={theme}>
+      <Navigation />
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
