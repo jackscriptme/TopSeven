@@ -1,3 +1,38 @@
 {
-  "test": true
+  "name": "Cristiano Ronaldo +9",
+  "description": "First TSP token",
+  "image": "https://staging-topseven.web.app/meta-images/1.png",
+  "dna": "3e3a86b6fcd50bd688891829b1485446566bb3e1",
+  "edition": 1,
+  "date": 1646818113959,
+  "attributes": [
+    {
+      "trait_type": "OVERALL",
+      "value": "94"
+    },
+    {
+      "trait_type": "PAC",
+      "value": "89"
+    },
+    {
+      "trait_type": "SHO",
+      "value": "95"
+    },
+    {
+      "trait_type": "PAS",
+      "value": "83"
+    },
+    {
+      "trait_type": "DRI",
+      "value": "92"
+    },
+    {
+      "trait_type": "DEF",
+      "value": "37"
+    },
+    {
+      "trait_type": "PHY",
+      "value": "79"
+    }
+  ]
 }

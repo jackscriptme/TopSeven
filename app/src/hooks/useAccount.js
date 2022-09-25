@@ -4,10 +4,8 @@ import { ethers } from 'ethers';
 
 import environments from '../utils/environments';
 import Token from '../abis/TopSevenPlayer.json';
-import Minter from '../abis/PublicMinter.json';
 
-const tokenContractAddress = '0xA64c09eAECC403b12D97852E3089a5F4670AB120';
-const minterContractAddress = '0x200643AC0DD4D043AA0Cd9036770066517C8aaFC';
+const tokenContractAddress = '0x45438E2F20EAcf63F00A3207e026222F70674C22';
 
 const { NETWORK_ID: networkId } = environments;
 
@@ -75,22 +73,17 @@ const useAccount = () => {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const minterContract = new ethers.Contract(
-          minterContractAddress,
-          Minter.abi,
+
+        const tokenContract = new ethers.Contract(
+          tokenContractAddress,
+          Token.abi,
           signer
         );
 
-        // const tokenContract = new ethers.Contract(
-        //   tokenContractAddress,
-        //   Token.abi,
-        //   signer
-        // );
-
-        // const test = await tokenContract.balanceOf(account, 1);
+        // const test = await tokenContract.balanceOf(account);
         // console.log({ test: test.toString() });
 
-        const txn = await minterContract.mint(account, 1, {
+        const txn = await tokenContract.safeMint(account, 1000, {
           value: ethers.utils.parseEther('1'),
         });
 
