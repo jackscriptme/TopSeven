@@ -2,20 +2,40 @@
   "manifestVersion": "3.2",
   "proxies": [
     {
-      "address": "0xb9Dce8D855aFA911907a9FB0417776Fa8d411a08",
-      "txHash": "0x975e5d67b6314b843b670299778760894e7ba243a13af8aff02164e565e09110",
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "txHash": "0x443babc1c44ddf8a689c44b4b93111acfcb949030665c28f862fe7f1901d7e67",
       "kind": "uups"
     },
     {
-      "address": "0xA64c09eAECC403b12D97852E3089a5F4670AB120",
-      "txHash": "0x22c4402a2e7597ee2ae33e20f9a7224a7ee11637d121d80e9114666177aa953a",
+      "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      "txHash": "0xd79846f7a1566381f01105f1491f4a7982b1e15fa1d16c5b7ad68491018b18cd",
+      "kind": "uups"
+    },
+    {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0x17869a1a5f8fc01d5115ba7e0161a5a22fffedef8be22e926c294836bf353c28",
+      "kind": "uups"
+    },
+    {
+      "address": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+      "txHash": "0x6a3271f270fc2325435a264958714aa99688eb562017b68ca90fa8f3cb72a2db",
+      "kind": "uups"
+    },
+    {
+      "address": "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
+      "txHash": "0x30f047eaaffcdfe5c07a097d179cb385116b34499bad82f2b538496d81c81a8f",
+      "kind": "uups"
+    },
+    {
+      "address": "0xc5a5C42992dECbae36851359345FE25997F5C42d",
+      "txHash": "0x393e6e052bafd192191538298c02a7e763abafc13f2779ee7ce55d3c04e234b1",
       "kind": "uups"
     }
   ],
   "impls": {
-    "d76ac41ac8b8bf518ecca79d4103ceb9d473429f30f7602b17420f5bed0b54d6": {
-      "address": "0xDBF1f13B4A606835052B104Ed1a2431BbDB05BEE",
-      "txHash": "0xeda4a881bc06968d1fa131b609bcfe9ef6f0496aeff075987478d339f916f0f9",
+    "ec976c789eaece3c876f5f51308b3ba6f6e0614bbf1ffd237f98c7f312d4da52": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0x1e13257711e525b7f11edc956bd762f4f1fcbc84cee8363805d393941a2fe080",
       "layout": {
         "storage": [
           {
@@ -84,25 +104,9 @@
             "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:528"
           },
           {
-            "label": "_paused",
-            "offset": 0,
-            "slot": "151",
-            "type": "t_bool",
-            "contract": "PausableUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:29"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "152",
-            "type": "t_array(t_uint256)49_storage",
-            "contract": "PausableUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:116"
-          },
-          {
             "label": "_roles",
             "offset": 0,
-            "slot": "201",
+            "slot": "151",
             "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
             "contract": "AccessControlUpgradeable",
             "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
@@ -110,10 +114,26 @@
           {
             "label": "__gap",
             "offset": 0,
-            "slot": "202",
+            "slot": "152",
             "type": "t_array(t_uint256)49_storage",
             "contract": "AccessControlUpgradeable",
             "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:116"
           },
           {
             "label": "__gap",
