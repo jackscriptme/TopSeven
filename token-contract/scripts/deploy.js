@@ -17,21 +17,17 @@ async function main() {
   // We get the contract to deploy
   const TopSevenPlayer = await ethers.getContractFactory('TopSevenPlayer');
   if (process.env.IS_UPGRADE !== 'true') {
-    const mirl = await upgrades.deployProxy(TopSevenPlayer);
-    await mirl.deployed();
-    console.log('TopSevenPlayer is deployed to:', mirl.address);
+    const token = await upgrades.deployProxy(TopSevenPlayer);
+    await token.deployed();
+    console.log('TopSevenPlayer is deployed to:', token.address);
   } else {
-    const mirl = await upgrades.upgradeProxy(
+    const token = await upgrades.upgradeProxy(
       process.env.PROXY_ADDRESS,
       TopSevenPlayer
     );
-    await mirl.deployed();
-    console.log('TopSevenPlayer is upgraded to:', mirl.address);
+    await token.deployed();
+    console.log('TopSevenPlayer is upgraded to:', token.address);
   }
-
-  const publicMinter = await ethers.getContractFactory('PublicMinter');
-  const s = await publicMinter.deploy();
-  console.log('PublicMinter is deployed to:', s.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
