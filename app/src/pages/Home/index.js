@@ -80,14 +80,15 @@ const Home = () => {
             sx={{
               background:
                 'linear-gradient(90deg, rgba(242,160,0,1) 0%, rgba(255,247,41,1) 50%, rgba(255,117,0,1) 100%)',
-              '-webkit-background-clip': 'text',
-              '-webkit-text-fill-color': 'transparent',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
             }}
           >
             TopSeven
           </Typography>
           {(account ? mainButtons : authButtons).map((button) => (
             <Box
+              key={button.text}
               role='button'
               display='flex'
               gap={1}

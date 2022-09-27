@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 
 import environments from '../utils/environments';
 import Token from '../abis/TopSevenPlayer.json';
+import { login } from '../services/firebase.service';
 
 const tokenContractAddress = '0x45438E2F20EAcf63F00A3207e026222F70674C22';
 
@@ -131,6 +132,12 @@ const useAccount = () => {
   useEffect(() => {
     init();
   }, []);
+
+  useEffect(() => {
+    if (isInitialized) {
+      login(account);
+    }
+  }, [isInitialized, account]);
 
   return {
     isInitialized,

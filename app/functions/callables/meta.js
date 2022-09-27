@@ -1,3 +1,4 @@
+const functions = require('firebase-functions');
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
@@ -16,4 +17,4 @@ app.get('/meta/:id', (req, res) => {
     });
 });
 
-module.exports = app;
+module.exports = functions.https.onRequest(app);

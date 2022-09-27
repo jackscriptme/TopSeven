@@ -1,5 +1,10 @@
-const functions = require('firebase-functions');
+const admin = require('firebase-admin');
 
-const meta = require('./callables/meta.js');
+const meta = require('./callables/meta');
+const { getCustomToken, signMessage } = require('./callables/authentication');
 
-exports.meta = functions.https.onRequest(meta);
+admin.initializeApp();
+
+exports.meta = meta;
+exports.getCustomToken = getCustomToken;
+exports.signMessage = signMessage;
