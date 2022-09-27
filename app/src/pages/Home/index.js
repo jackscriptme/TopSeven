@@ -95,9 +95,11 @@ const Home = () => {
               alignItems='center'
               justifyContent='center'
               sx={
-                !isAuthenticating && {
-                  '&:hover': { '& > svg': { opacity: 1 } },
-                }
+                !isAuthenticating
+                  ? {
+                      '&:hover': { '& > svg': { opacity: 1 } },
+                    }
+                  : {}
               }
               onClick={button.onClick}
             >

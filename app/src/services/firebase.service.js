@@ -36,9 +36,7 @@ export const logout = async () => {
 
 export const login = async (address) => {
   if (!address) {
-    console.log('Logout');
     await logout();
-    console.log(getAuth(firebaseApp)?.currentUser);
     return;
   }
 
