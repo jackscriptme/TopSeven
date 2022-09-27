@@ -12,7 +12,7 @@ const signMessage = functions.https.onCall(async (data, context) => {
     if (!isValidAddress(address))
       throw new Error(`Address ${address} is invalid`);
 
-    const signedMessage = `Hello ${address}, this is an unique signed message ${v4()}`;
+    const signedMessage = `TopSeven welcome ${address}, your nonce code: ${v4()}`;
     await admin
       .firestore()
       .collection('users')
