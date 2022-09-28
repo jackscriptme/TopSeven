@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
+import { query, doc, onSnapshot } from 'firebase/firestore';
 
-import firebaseApp from '../configs/firebase.config';
+import firebaseApp, { firestore } from '../configs/firebase.config';
 import { getCustomToken } from '../services/auth.service';
 
 const useFirebaseAuth = (address) => {
   const auth = getAuth(firebaseApp);
   const [isInitialized, setIsInitialized] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const timeout = useRef(null);
 
   const logout = useCallback(async () => {
@@ -50,7 +52,30 @@ const useFirebaseAuth = (address) => {
     switchAuth();
   }, [switchAuth]);
 
-  return { currentUser, isInitialized };
+  useEffect(() => {
+    let unsubscribe;
+    if (currentUser) {
+      unsubscribe = onSnapshot(
+        doc(firestore, 'users', currentUser.uid),
+        async (document) => {
+          setProfile(
+            document.exists()
+              ? {
+                  id: document.id,
+                  ...document.data(),
+                }
+              : null
+          );
+        }
+      );
+    } else {
+      setProfile(null);
+    }
+
+    return () => unsubscribe && unsubscribe();
+  }, [currentUser]);
+
+  return { currentUser, profile, isInitialized };
 };
 
 export default useFirebaseAuth;

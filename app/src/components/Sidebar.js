@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
@@ -11,6 +10,8 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import HistoryIcon from '@mui/icons-material/History';
 import SettingsIcon from '@mui/icons-material/Settings';
 import FeedIcon from '@mui/icons-material/Feed';
+
+import useMatchPath from '../hooks/useMatchPath';
 
 const items = [
   { name: 'Dashboard', path: '/dashboard', icon: DashboardIcon },
@@ -27,9 +28,7 @@ const items = [
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const isActive = useCallback((path) => path === pathname, [pathname]);
+  const { isMatchPathInclude } = useMatchPath();
 
   return (
     <Box
@@ -43,7 +42,6 @@ const Sidebar = () => {
       flexDirection='column'
       alignItems='center'
       overflow='auto'
-      title=''
     >
       {items.map((item) => (
         <Box
@@ -54,10 +52,13 @@ const Sidebar = () => {
           alignItems='center'
           justifyContent='center'
           borderRadius={4}
-          bgcolor={isActive(item.path) ? 'success.main' : 'transparent'}
+          title={item.name}
+          bgcolor={
+            isMatchPathInclude(item.path) ? 'success.main' : 'transparent'
+          }
           sx={{
             cursor: 'pointer',
-            ...(isActive(item.path)
+            ...(isMatchPathInclude(item.path)
               ? {
                   boxShadow: '0px 0px 10px 0px rgba(255,218,9,1)',
                   WebkitBoxShadow: '0px 0px 10px 0px rgba(255,218,9,1)',
@@ -65,8 +66,8 @@ const Sidebar = () => {
                 }
               : {}),
           }}
-          color={isActive(item.path) ? 'black' : 'secondary.main'}
-          onClick={() => !isActive(item.path) && navigate(item.path)}
+          color={isMatchPathInclude(item.path) ? 'black' : 'secondary.main'}
+          onClick={() => !isMatchPathInclude(item.path) && navigate(item.path)}
         >
           <item.icon />
         </Box>
