@@ -1,18 +1,9 @@
-import { Box, Typography, keyframes } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { yellow, brown, grey } from '@mui/material/colors';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
 import useAppContext from '../../hooks/useAppContext';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0
-  }
-  to {
-    opacity: 1
-  }
-`;
 
 const Home = () => {
   const {
@@ -63,10 +54,6 @@ const Home = () => {
           flexDirection='column'
           justifyContent='center'
           alignItems='center'
-          // sx={{
-          //   opacity: 0,
-          //   animation: `${fadeIn} 1.5s linear 0.5s 1 normal forwards`,
-          // }}
         >
           <Typography
             fontSize={100}

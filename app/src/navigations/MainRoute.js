@@ -9,6 +9,7 @@ import LiveRoute from './LiveRoute';
 import NewsRoute from './NewsRoute';
 import SettingsRoute from './SettingsRoute';
 import TeamsRoute from './TeamsRoute';
+import MarketRoute from './MarketRoute';
 
 const routes = [
   { path: '/dashboard/*', element: DashboardRoute },
@@ -20,6 +21,7 @@ const routes = [
   { path: '/history/*', element: HistoryRoute },
   { path: '/settings/*', element: SettingsRoute },
   { path: '/news/*', element: NewsRoute },
+  { path: '/market/*', element: MarketRoute },
 ];
 
 const MainRoute = () => {

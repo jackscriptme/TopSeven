@@ -1,7 +1,13 @@
 import { Box } from '@mui/material';
 
+import Layout from '../../components/Layout';
+
 const News = () => {
-  return <Box>News</Box>;
+  return (
+    <Layout>
+      <Box>News</Box>
+    </Layout>
+  );
 };
 
 export default News;
