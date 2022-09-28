@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import Setting from '../pages/Setting';
+import Analytics from '../pages/Analytics/Analytics';
 
-const SettingRoute = () => {
+const AnalyticsRoute = () => {
   return (
     <Routes>
-      <Route path='/' element={<Setting />} />
+      <Route path='/' element={<Analytics />} />
       <Route path='/*' element={<Navigate to='/' replace />} />
     </Routes>
   );
 };
 
-export default SettingRoute;
+export default AnalyticsRoute;

@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import Home from '../pages/Home';
+import Dashboard from '../pages/Dashboard/Dashboard';
 
-const HomeRoute = () => {
+const DashboardRoute = () => {
   return (
     <Routes>
-      <Route path='/' element={<Home />} />
+      <Route path='/' element={<Dashboard />} />
       <Route path='/*' element={<Navigate to='/' replace />} />
     </Routes>
   );
 };
 
-export default HomeRoute;
+export default DashboardRoute;

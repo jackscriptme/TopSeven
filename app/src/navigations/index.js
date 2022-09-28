@@ -1,17 +1,21 @@
-import { Routes, Route } from 'react-router-dom';
+import MainRoute from './MainRoute';
+import AuthRoute from './AuthRoute';
 
-import AccountRoute from './AccountRoute';
-import SettingRoute from './SettingRoute';
-import HomeRoute from './HomeRoute';
+import useAppContext from '../hooks/useAppContext';
+import { Box } from '@mui/material';
 
 const Navigation = () => {
-  return (
-    <Routes>
-      <Route path='/account/*' element={<AccountRoute />} />
-      <Route path='/setting/*' element={<SettingRoute />} />
-      <Route path='/*' element={<HomeRoute />} />
-    </Routes>
-  );
+  const {
+    accountState: { account, isAuthenticating },
+    firebaseAuthState: { currentUser, isInitialized },
+  } = useAppContext();
+
+  if (isAuthenticating || !isInitialized)
+    return <Box width='100vw' height='100vh' bgcolor='black' />;
+
+  if (!account || !currentUser) return <AuthRoute />;
+
+  return <MainRoute />;
 };
 
 export default Navigation;

@@ -1,8 +1,7 @@
 import { httpsCallable } from 'firebase/functions';
 import { ethers } from 'ethers';
-import { getAuth, signInWithCustomToken } from 'firebase/auth';
 
-import firebaseApp, { functions } from '../configs/firebase.config';
+import { functions } from '../configs/firebase.config';
 
 export const getSignedMessage = async (address) => {
   const get = httpsCallable(functions, 'signMessage');
@@ -25,27 +24,4 @@ export const getCustomToken = async (address) => {
   const res = await get({ address, signature });
 
   return res.data;
-};
-
-export const logout = async () => {
-  const auth = getAuth(firebaseApp);
-  if (auth.currentUser) {
-    await auth.signOut();
-  }
-};
-
-export const setFirebaseAuth = async (address) => {
-  if (!address) {
-    await logout();
-    return;
-  }
-
-  const customToken = await getCustomToken(address);
-
-  const auth = getAuth(firebaseApp);
-  if (auth.currentUser) {
-    await auth.signOut();
-  }
-
-  await signInWithCustomToken(auth, customToken);
 };
