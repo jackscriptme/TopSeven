@@ -1,15 +1,16 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-import Home from '../pages/Home';
+import AccountRoute from './AccountRoute';
+import SettingRoute from './SettingRoute';
+import HomeRoute from './HomeRoute';
 
 const Navigation = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/*' element={<Navigate to='/' replace />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path='/account/*' element={<AccountRoute />} />
+      <Route path='/setting/*' element={<SettingRoute />} />
+      <Route path='/*' element={<HomeRoute />} />
+    </Routes>
   );
 };
 

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, keyframes } from '@mui/material';
 import { yellow, brown, grey } from '@mui/material/colors';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
@@ -23,9 +24,15 @@ const Home = () => {
     logout,
   } = useAppContext();
 
+  const navigate = useNavigate();
+
   const mainButtons = [
-    { id: 0, text: 'Your teams', onClick: () => {} },
-    { id: 1, text: 'Settings', onClick: () => {} },
+    {
+      id: 0,
+      text: 'My account',
+      onClick: () => navigate('/account/information'),
+    },
+    { id: 1, text: 'Settings', onClick: () => navigate('/setting') },
     { id: 2, text: 'Logout', onClick: logout },
   ];
 

@@ -1,4 +1,5 @@
 import { ThemeProvider, createTheme } from '@mui/material';
+import { BrowserRouter } from 'react-router-dom';
 
 import Navigation from './navigations';
 import { AppContextProvider } from './contexts/app.context';
@@ -9,7 +10,9 @@ const App = () => {
   return (
     <AppContextProvider>
       <ThemeProvider theme={theme}>
-        <Navigation />
+        <BrowserRouter>
+          <Navigation />
+        </BrowserRouter>
       </ThemeProvider>
     </AppContextProvider>
   );

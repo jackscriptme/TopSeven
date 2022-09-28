@@ -34,7 +34,7 @@ export const logout = async () => {
   }
 };
 
-export const login = async (address) => {
+export const setFirebaseAuth = async (address) => {
   if (!address) {
     await logout();
     return;
