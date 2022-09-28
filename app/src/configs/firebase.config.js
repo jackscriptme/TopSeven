@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
+import { getFunctions } from 'firebase/functions';
 
 import environments from '../utils/environments';
 
@@ -19,7 +19,3 @@ export default firebaseApp;
 export const firestore = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const functions = getFunctions(firebaseApp);
-
-// if (process.env.REACT_APP_FIREBASE_USE_EMULATOR) {
-//   connectFunctionsEmulator(functions, 'localhost', 5001);
-// }
