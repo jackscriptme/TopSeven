@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 
 import Layout from '../../components/Layout';
@@ -77,10 +76,6 @@ const Market = () => {
 
   const openFilterModal = useCallback(() => setIsOpenFilterModal(true), []);
   const closeFilterModal = useCallback(() => setIsOpenFilterModal(false), []);
-  const resetFilters = useCallback(() => {
-    setTeams([]);
-    setPositions([]);
-  }, []);
 
   useEffect(() => {
     setPage(1);
@@ -149,17 +144,10 @@ const Market = () => {
               <Typography flex={1} fontSize={12} fontWeight={600}>
                 Filter
               </Typography>
-              {!hasFilter ? (
-                <TuneIcon
-                  sx={{ fontSize: 14, cursor: 'pointer' }}
-                  onClick={openFilterModal}
-                />
-              ) : (
-                <HighlightOffIcon
-                  sx={{ fontSize: 14, cursor: 'pointer' }}
-                  onClick={resetFilters}
-                />
-              )}
+              <TuneIcon
+                sx={{ fontSize: 14, cursor: 'pointer' }}
+                onClick={openFilterModal}
+              />
             </Box>
           </Grid>
         </Grid>
