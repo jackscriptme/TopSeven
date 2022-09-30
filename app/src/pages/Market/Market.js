@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -7,6 +7,7 @@ import WorkspacesIcon from '@mui/icons-material/Workspaces';
 
 import Layout from '../../components/Layout';
 import PlayerCard from './components/PlayerCard';
+import FilterModal from './components/FilterModal';
 import useAppContext from '../../hooks/useAppContext';
 
 const navigations = [
@@ -23,9 +24,11 @@ const Market = () => {
   } = useAppContext();
 
   const [page, setPage] = useState(1);
+  const [inputPage, setInputPage] = useState(1);
   const [search, setSearch] = useState('');
   const [positions, setPositions] = useState([]);
   const [teams, setTeams] = useState([]);
+  const [isOpenFilterModal, setIsOpenFilterModal] = useState(false);
 
   const filteredPlayers = useMemo(() => {
     let filtered = players.filter((player) =>
@@ -72,12 +75,31 @@ const Market = () => {
     [positions, teams]
   );
 
+  const openFilterModal = useCallback(() => setIsOpenFilterModal(true), []);
+  const closeFilterModal = useCallback(() => setIsOpenFilterModal(false), []);
+  const resetFilters = useCallback(() => {
+    setTeams([]);
+    setPositions([]);
+  }, []);
+
   useEffect(() => {
     setPage(1);
   }, [search, positions, teams]);
 
+  useEffect(() => {
+    setInputPage(page);
+  }, [page]);
+
   return (
     <Layout navigations={navigations}>
+      <FilterModal
+        isOpen={isOpenFilterModal}
+        close={closeFilterModal}
+        teams={teams}
+        positions={positions}
+        setTeams={setTeams}
+        setPositions={setPositions}
+      />
       <Box
         flex={1}
         borderRadius={2}
@@ -128,9 +150,15 @@ const Market = () => {
                 Filter
               </Typography>
               {!hasFilter ? (
-                <TuneIcon sx={{ fontSize: 14, cursor: 'pointer' }} />
+                <TuneIcon
+                  sx={{ fontSize: 14, cursor: 'pointer' }}
+                  onClick={openFilterModal}
+                />
               ) : (
-                <HighlightOffIcon sx={{ fontSize: 14, cursor: 'pointer' }} />
+                <HighlightOffIcon
+                  sx={{ fontSize: 14, cursor: 'pointer' }}
+                  onClick={resetFilters}
+                />
               )}
             </Box>
           </Grid>
@@ -188,17 +216,39 @@ const Market = () => {
             ))}
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
-            <Typography fontWeight={700} color="success.main">
+            <Typography
+              fontWeight={700}
+              color="success.main"
+              sx={{ cursor: 'pointer' }}
+              onClick={() => setPage(Math.max(1, page - 1))}
+            >
               Prev
             </Typography>
             <Box color="success.main">
               <input
-                style={{ width: 50, height: 30, marginRight: 6 }}
-                value={page}
+                type="number"
+                min={1}
+                style={{
+                  width: 50,
+                  height: 30,
+                  marginRight: 6,
+                  fontSize: 16,
+                  textAlign: 'center',
+                }}
+                value={inputPage || ''}
+                onChange={(e) => setInputPage(Number(e.target.value))}
+                onKeyUp={(e) =>
+                  e.key === 'Enter' && inputPage && setPage(inputPage)
+                }
               />
               of {totalPages} pages
             </Box>
-            <Typography fontWeight={700} color="success.main">
+            <Typography
+              fontWeight={700}
+              color="success.main"
+              sx={{ cursor: 'pointer' }}
+              onClick={() => setPage(Math.min(page + 1, totalPages))}
+            >
               Next
             </Typography>
           </Box>
