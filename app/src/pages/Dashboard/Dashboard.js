@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+// import DashboardIcon from '@mui/icons-material/Dashboard';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
@@ -13,7 +13,7 @@ import FeedIcon from '@mui/icons-material/Feed';
 import Layout from '../../components/Layout';
 
 const navigations = [
-  { path: '/dashboard', text: 'Dashboard', icon: DashboardIcon },
+  // { path: '/dashboard', text: 'Dashboard', icon: DashboardIcon },
   { path: '/teams', text: 'Teams', icon: WorkspacesIcon },
   { path: '/live', text: 'Live', icon: YouTubeIcon },
   { path: '/leagues', text: 'Leagues', icon: EmojiEventsIcon },

@@ -12,6 +12,7 @@ contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
     uint256 public BASE_PRICE;
     uint256 public LEGEND_BASE_PRICE; 
     uint256 public MIN_LEGEND_ID;
+    uint256[] private mintedIds;
 
     event Log(uint256 amount, uint256 gas);
     event ResultsFromCall(bool success, bytes data);
@@ -45,6 +46,7 @@ contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
             }
         }
         _safeMint(to, tokenId);
+        mintedIds.push(tokenId);
     }
 
     function _authorizeUpgrade(address newImplementation)
@@ -52,6 +54,10 @@ contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
         onlyOwner
         override
     {}
+
+    function getMintedIds() external view returns (uint256[] memory) {
+        return mintedIds;
+    }
 
     function withdraw() public onlyOwner {
         uint256 balance = address(this).balance;

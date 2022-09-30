@@ -28,14 +28,14 @@
     },
     {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0xc2e713c05de4eb99dad2bdfbb42c6b1766f1b797b160578fd54ba98091f8e2b4",
+      "txHash": "0xf4e6f5d7af0fc0fca20b7976c42f301bd5fb57ee385b69e0e3d569b31d343ab3",
       "kind": "uups"
     }
   ],
   "impls": {
-    "9a158ab3575c69dbb8acde0140eeaabe6f3e8faf7ba717cf1b1d26f165da2ee2": {
+    "835283ca7cf76a32acf9fa406c8d647cf34a24836c5f41f70fc09fb134352e24": {
       "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0xfc7d49942acf330ce1988bbc4e1dd147cffc24a06bdf6d185e185a1b0f583cfa",
+      "txHash": "0x1a7ffc8b1149431d628a155d28c827ff23e610e7ce1f86c28313d8033874d066",
       "layout": {
         "storage": [
           {
@@ -230,6 +230,14 @@
             "type": "t_uint256",
             "contract": "TopSevenPlayer",
             "src": "contracts/TopSevenPlayer.sol:14"
+          },
+          {
+            "label": "mintedIds",
+            "offset": 0,
+            "slot": "355",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "TopSevenPlayer",
+            "src": "contracts/TopSevenPlayer.sol:15"
           }
         ],
         "types": {

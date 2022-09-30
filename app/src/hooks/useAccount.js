@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import environments from '../utils/environments';
 import Token from '../abis/TopSevenPlayer.json';
 
-const tokenContractAddress = '0x45438E2F20EAcf63F00A3207e026222F70674C22';
+const tokenContractAddress = '0xE00fCA45C345128281505e6436cE6931A484e8dE';
 
 const { NETWORK_ID: networkId } = environments;
 
@@ -13,6 +13,8 @@ const useAccount = () => {
   const [account, setAccount] = useState(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [isMinting, setIsMinting] = useState(false);
+  const [tokenMintedIds, setTokenMintedIds] = useState([]);
 
   const getEthereum = useCallback(() => {
     const { ethereum } = window;
@@ -22,6 +24,22 @@ const useAccount = () => {
     }
 
     return ethereum;
+  }, []);
+
+  const getContract = useCallback(() => {
+    const ethereum = getEthereum();
+    if (ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+
+      const tokenContract = new ethers.Contract(
+        tokenContractAddress,
+        Token.abi,
+        signer
+      );
+
+      return tokenContract;
+    }
   }, []);
 
   const connectMetamaskWallet = useCallback(async () => {
@@ -65,33 +83,40 @@ const useAccount = () => {
     }
   }, []);
 
-  const mintNFT = async () => {
+  const getMintedIds = useCallback(async () => {
     try {
-      const ethereum = getEthereum();
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-
-        const tokenContract = new ethers.Contract(
-          tokenContractAddress,
-          Token.abi,
-          signer
-        );
-
-        // const test = await tokenContract.balanceOf(account);
-        // console.log({ test: test.toString() });
-
-        const txn = await tokenContract.safeMint(account, 1000, {
-          value: ethers.utils.parseEther('1'),
-        });
-
-        await txn.wait();
-        console.log(txn.hash);
-      }
+      const contract = getContract();
+      const result = await contract.getMintedIds();
+      const mintedIds = result.map((item) => item.toString());
+      setTokenMintedIds(mintedIds);
     } catch (err) {
       console.error(err);
     }
-  };
+  }, []);
+
+  const mintNFT = useCallback(
+    async (tokenId) => {
+      if (!account) return;
+
+      setIsMinting(true);
+      try {
+        const contract = getContract();
+        if (contract) {
+          // const test = await tokenContract.balanceOf(account);
+          // console.log({ test: test.toString() });
+          // const txn = await tokenContract.safeMint(account, 1000, {
+          //   value: ethers.utils.parseEther('1'),
+          // });
+          // await txn.wait();
+          // console.log(txn.hash);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+      setIsMinting(false);
+    },
+    [account]
+  );
 
   const init = useCallback(async () => {
     const ethereum = getEthereum();
@@ -130,14 +155,17 @@ const useAccount = () => {
 
   useEffect(() => {
     init();
+    getMintedIds();
   }, []);
 
   return {
     isInitialized,
     isAuthenticating,
     account,
+    tokenMintedIds,
     connectMetamaskWallet,
     logout,
+    getMintedIds,
     mintNFT,
   };
 };
