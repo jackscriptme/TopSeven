@@ -5,9 +5,8 @@ import { ethers } from 'ethers';
 import environments from '../utils/environments';
 import Token from '../abis/TopSevenPlayer.json';
 
-const tokenContractAddress = '0xE00fCA45C345128281505e6436cE6931A484e8dE';
-
-const { NETWORK_ID: networkId } = environments;
+const { NETWORK_ID: networkId, TOKEN_CONTRACT_ADDRESS: tokenContractAddress } =
+  environments;
 
 const useAccount = () => {
   const [account, setAccount] = useState(null);
@@ -163,6 +162,7 @@ const useAccount = () => {
     isAuthenticating,
     account,
     tokenMintedIds,
+    isMinting,
     connectMetamaskWallet,
     logout,
     getMintedIds,
