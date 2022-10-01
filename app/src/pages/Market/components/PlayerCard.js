@@ -115,7 +115,7 @@ const PlayerCard = ({ player, isMinted }) => {
             },
           }}
         >
-          {isMinted ? 'Sold' : 'Buy'}
+          {isMinted ? 'Sold' : `Buy with ${player.price / 1e18} MATIC`}
         </Button>
       </Box>
     </Box>

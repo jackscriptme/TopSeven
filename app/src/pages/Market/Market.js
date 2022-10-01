@@ -162,13 +162,13 @@ const Market = () => {
                 alignItems="center"
                 justifyContent="center"
                 borderRadius={1}
-                bgcolor={page === item ? 'black' : 'success.main'}
+                bgcolor={page === item ? 'success.main' : 'black'}
                 sx={{ cursor: 'pointer' }}
                 onClick={() => setPage(item)}
               >
                 <Typography
                   fontWeight={700}
-                  color={page === item ? 'white' : 'black'}
+                  color={page === item ? 'black' : 'white'}
                 >
                   {item}
                 </Typography>
@@ -190,13 +190,13 @@ const Market = () => {
                 alignItems="center"
                 justifyContent="center"
                 borderRadius={1}
-                bgcolor={page === item ? 'black' : 'success.main'}
+                bgcolor={page === item ? 'success.main' : 'black'}
                 sx={{ cursor: 'pointer' }}
                 onClick={() => setPage(item)}
               >
                 <Typography
                   fontWeight={700}
-                  color={page === item ? 'white' : 'black'}
+                  color={page === item ? 'black' : 'white'}
                 >
                   {item}
                 </Typography>
