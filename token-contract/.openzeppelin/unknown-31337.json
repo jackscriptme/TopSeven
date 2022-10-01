@@ -28,14 +28,14 @@
     },
     {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0xf4e6f5d7af0fc0fca20b7976c42f301bd5fb57ee385b69e0e3d569b31d343ab3",
+      "txHash": "0x20840c2dd7f8818228d829373d61994c0cee803a869b9a1b39ff1e53ecd70978",
       "kind": "uups"
     }
   ],
   "impls": {
-    "835283ca7cf76a32acf9fa406c8d647cf34a24836c5f41f70fc09fb134352e24": {
+    "122337edc44eeecd65430a796ae7afb08c68c7ac482ba7605f01ce57bbc9a974": {
       "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0x1a7ffc8b1149431d628a155d28c827ff23e610e7ce1f86c28313d8033874d066",
+      "txHash": "0xbb031b1cead0c90a26c258ec75b2494792514e001043b6f17873aaecadd17629",
       "layout": {
         "storage": [
           {
@@ -208,36 +208,12 @@
             "src": "contracts/TopSevenPlayer.sol:11"
           },
           {
-            "label": "BASE_PRICE",
-            "offset": 0,
-            "slot": "352",
-            "type": "t_uint256",
-            "contract": "TopSevenPlayer",
-            "src": "contracts/TopSevenPlayer.sol:12"
-          },
-          {
-            "label": "LEGEND_BASE_PRICE",
-            "offset": 0,
-            "slot": "353",
-            "type": "t_uint256",
-            "contract": "TopSevenPlayer",
-            "src": "contracts/TopSevenPlayer.sol:13"
-          },
-          {
-            "label": "MIN_LEGEND_ID",
-            "offset": 0,
-            "slot": "354",
-            "type": "t_uint256",
-            "contract": "TopSevenPlayer",
-            "src": "contracts/TopSevenPlayer.sol:14"
-          },
-          {
             "label": "mintedIds",
             "offset": 0,
-            "slot": "355",
+            "slot": "352",
             "type": "t_array(t_uint256)dyn_storage",
             "contract": "TopSevenPlayer",
-            "src": "contracts/TopSevenPlayer.sol:15"
+            "src": "contracts/TopSevenPlayer.sol:12"
           }
         ],
         "types": {

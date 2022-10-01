@@ -9,9 +9,6 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721Enumer
 
 contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, OwnableUpgradeable, UUPSUpgradeable {
     bool public IS_FREE_MINT;
-    uint256 public BASE_PRICE;
-    uint256 public LEGEND_BASE_PRICE; 
-    uint256 public MIN_LEGEND_ID;
     uint256[] private mintedIds;
 
     event Log(uint256 amount, uint256 gas);
@@ -27,9 +24,6 @@ contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
         __Ownable_init();
         __UUPSUpgradeable_init();
         IS_FREE_MINT = true;
-        BASE_PRICE = 500000000 gwei;
-        LEGEND_BASE_PRICE = 1000000000 gwei;
-        MIN_LEGEND_ID = 1000;
     }
 
     function _baseURI() internal pure override returns (string memory) {
@@ -39,14 +33,21 @@ contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
     function safeMint(address to, uint256 tokenId) public payable {
         require(!_exists(tokenId), "Token is minted");
         if (!IS_FREE_MINT) {
-            if (tokenId >= MIN_LEGEND_ID) {
-                require(msg.value >= LEGEND_BASE_PRICE, "Need to send more MATIC");
-            } else {
-                require(msg.value >= BASE_PRICE, "Need to send more MATIC");
-            }
+            uint256 overall = tokenId % 1000;
+            uint256 divideBy = 80;
+            if (overall >= 90) {
+                divideBy = 20;
+            } else if (overall >= 80) {
+                divideBy = 40;
+            } 
+            uint256 price = overall * 1000000000000000000 / divideBy;
+
+            require(msg.value >= price, "Need to send more MATIC");
         }
         _safeMint(to, tokenId);
         mintedIds.push(tokenId);
+
+        emit Log(msg.value, gasleft());
     }
 
     function _authorizeUpgrade(address newImplementation)
@@ -65,23 +66,12 @@ contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
 
         (bool success, bytes memory data) = (msg.sender).call{value: balance}('');
         require(success, 'Withdrawal failed');
+        emit Log(balance, gasleft());
         emit ResultsFromCall(success, data);
     }
 
     function setIsFreeMint(bool _isFreeMint) public onlyOwner {
         IS_FREE_MINT = _isFreeMint;
-    }
-
-    function setBasePrice(uint256 _basePrice) public onlyOwner {
-        BASE_PRICE = _basePrice;
-    }
-
-    function setLegendBasePrice(uint _legendBasePrice) public onlyOwner {
-        LEGEND_BASE_PRICE = _legendBasePrice;
-    }
-
-    function setMinLegendId(uint256 _minLegendId) public onlyOwner {
-        MIN_LEGEND_ID = _minLegendId;
     }
 
     // The following functions are overrides required by Solidity.

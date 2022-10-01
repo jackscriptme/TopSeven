@@ -7,6 +7,19 @@ const { ethers, upgrades } = require('hardhat');
 const BASE_PRICE = 1e18 / 2;
 const LEGEND_BASE_PRICE = 1e18;
 
+const getTokenPrice = (tokenId) => {
+  const overall = tokenId % 1000;
+  let divideBy = 80;
+  if (overall >= 90) {
+    divideBy = 20;
+  } else if (overall >= 80) {
+    divideBy = 40;
+  }
+
+  const price = (overall * 1e18) / divideBy;
+  return price;
+};
+
 describe('TopSevenPlayer', function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
@@ -59,45 +72,31 @@ describe('TopSevenPlayer', function () {
       const { token, owner } = await loadFixture(deployTopSevenPlayerFixture);
       await token.setIsFreeMint(false);
 
-      const value = BASE_PRICE.toString();
-      await token.safeMint(owner.address, 1, { from: owner.address, value });
+      const tokenId = 1090;
+      const price = getTokenPrice(tokenId);
+      const value = price.toString();
+      await token.safeMint(owner.address, tokenId, {
+        from: owner.address,
+        value,
+      });
 
       const totalSupply = await token.totalSupply();
       assert.equal(totalSupply, 1);
       const balance = await token.balanceOf(owner.address);
       assert.equal(balance, 1);
-    });
-
-    it('Mint legend successfully', async function () {
-      const { token, owner } = await loadFixture(deployTopSevenPlayerFixture);
-      await token.setIsFreeMint(false);
-
-      const value = LEGEND_BASE_PRICE.toString();
-      await token.safeMint(owner.address, 1000, { from: owner.address, value });
-
-      const totalSupply = await token.totalSupply();
-      assert.equal(totalSupply, 1);
-      const balance = await token.balanceOf(owner.address);
-      assert.equal(balance, 1);
+      const tokenOwner = await token.ownerOf(tokenId);
+      assert.equal(tokenOwner, owner.address);
     });
 
     it('Mint fail due to not enough matic', async function () {
       const { token, owner } = await loadFixture(deployTopSevenPlayerFixture);
       await token.setIsFreeMint(false);
 
-      const value = (BASE_PRICE * 1e-3).toString();
+      const tokenId = 1090;
+      const price = getTokenPrice(tokenId);
+      const value = (price - 1).toString();
       token
-        .safeMint(owner.address, 1, { from: owner.address, value })
-        .should.be.rejectedWith('Need to send more MATIC');
-    });
-
-    it('Mint legend fail due to not enough matic', async function () {
-      const { token, owner } = await loadFixture(deployTopSevenPlayerFixture);
-      await token.setIsFreeMint(false);
-
-      const value = (LEGEND_BASE_PRICE * 0.9).toString();
-      token
-        .safeMint(owner.address, 1000, { from: owner.address, value })
+        .safeMint(owner.address, tokenId, { from: owner.address, value })
         .should.be.rejectedWith('Need to send more MATIC');
     });
   });

@@ -25,7 +25,7 @@ const PlayerCard = ({ player, isMinted }) => {
         </Box>
         <Box flex={1} display="flex" justifyContent="center">
           <img
-            src="https://assets.manutd.com/AssetPicker/images/0/0/16/247/1111858/Player_Profile_Thumbnail_Mens_2223_Kit_DDG1658217260527.jpg"
+            src="https://cdn3d.iconscout.com/3d/premium/thumb/nft-mistery-box-4731026-3934285.png"
             width="100%"
             style={{ borderRadius: 8 }}
           />
