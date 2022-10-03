@@ -1,4 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
+import _ from 'lodash';
+import { v4 } from 'uuid';
 import { Box, Grid, Typography } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -29,8 +31,26 @@ const Market = () => {
   const [teams, setTeams] = useState([]);
   const [isOpenFilterModal, setIsOpenFilterModal] = useState(false);
 
+  const groupedPlayers = useMemo(() => {
+    const groupedPlayersByName = _.groupBy(players, 'name');
+    const result = [];
+    for (const key of Object.keys(groupedPlayersByName)) {
+      const duplicatePlayers = groupedPlayersByName[key];
+      const ids = duplicatePlayers.map((player) => player.id);
+      const mintedIds = ids.filter((id) => tokenMintedIds.includes(id));
+      const notMintedIds = ids.filter((id) => !tokenMintedIds.includes(id));
+      result.push({
+        ...duplicatePlayers[0],
+        id: v4(),
+        mintedIds,
+        notMintedIds,
+      });
+    }
+    return result;
+  }, [players, tokenMintedIds]);
+
   const filteredPlayers = useMemo(() => {
-    let filtered = players.filter((player) =>
+    let filtered = groupedPlayers.filter((player) =>
       player.name.toLowerCase().includes(search.trim().toLowerCase())
     );
 
@@ -44,7 +64,7 @@ const Market = () => {
       filtered = filtered.filter((player) => teams.includes(player.team.name));
     }
     return filtered;
-  }, [players, search, positions, teams]);
+  }, [groupedPlayers, search, positions, teams]);
 
   const paginatedPlayers = useMemo(
     () => filteredPlayers.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
@@ -245,10 +265,7 @@ const Market = () => {
           <Grid container spacing={2}>
             {paginatedPlayers.map((player) => (
               <Grid key={player.id} item xs={3}>
-                <PlayerCard
-                  player={player}
-                  isMinted={tokenMintedIds.includes(player.id)}
-                />
+                <PlayerCard player={player} />
               </Grid>
             ))}
           </Grid>

@@ -1,7 +1,8 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 
-const PlayerCard = ({ player, isMinted }) => {
-  const { name, image, position, stats, team } = player;
+const PlayerCard = ({ player }) => {
+  const { name, image, position, stats, team, notMintedIds } = player;
+  const remaining = notMintedIds.length;
 
   return (
     <Box
@@ -34,7 +35,7 @@ const PlayerCard = ({ player, isMinted }) => {
           <img src={team.image} width={25} />
         </Box>
       </Box>
-      <Box>
+      <Box display="flex" flexDirection="column" alignItems="center" gap={0.5}>
         <Typography
           align="center"
           fontWeight={700}
@@ -47,6 +48,20 @@ const PlayerCard = ({ player, isMinted }) => {
           }}
         >
           {name}
+        </Typography>
+        <Typography
+          align="center"
+          fontWeight={700}
+          fontSize={11}
+          color="success.main"
+          textTransform="uppercase"
+          sx={{
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {remaining} left
         </Typography>
       </Box>
       <Box>
@@ -100,7 +115,7 @@ const PlayerCard = ({ player, isMinted }) => {
       <Box>
         <Button
           size="small"
-          disabled={isMinted}
+          disabled={!remaining}
           sx={{
             textTransform: 'uppercase',
             fontSize: 12,
@@ -115,7 +130,7 @@ const PlayerCard = ({ player, isMinted }) => {
             },
           }}
         >
-          {isMinted ? 'Sold' : `Buy with ${player.price / 1e18} MATIC`}
+          {!remaining ? 'Sold out' : `Buy with ${player.price / 1e18} MATIC`}
         </Button>
       </Box>
     </Box>
