@@ -35,7 +35,7 @@ contract TopSevenPlayer is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
         if (!IS_FREE_MINT) {
             uint256 overall = tokenId % 1000;
             uint256 divideBy = 80;
-            if (overall >= 90) {
+            if (overall >= 88) {
                 divideBy = 20;
             } else if (overall >= 80) {
                 divideBy = 40;
