@@ -21,7 +21,7 @@ const PAGE_SIZE = 24;
 const Market = () => {
   const {
     playerState: { players },
-    accountState: { tokenMintedIds },
+    accountState: { tokenMintedIds, mintNFT, isMinting },
   } = useAppContext();
 
   const [page, setPage] = useState(1);
@@ -36,14 +36,9 @@ const Market = () => {
     const result = [];
     for (const key of Object.keys(groupedPlayersByName)) {
       const duplicatePlayers = groupedPlayersByName[key];
-      const ids = duplicatePlayers.map((player) => player.id);
-      const mintedIds = ids.filter((id) => tokenMintedIds.includes(id));
-      const notMintedIds = ids.filter((id) => !tokenMintedIds.includes(id));
       result.push({
         ...duplicatePlayers[0],
         id: v4(),
-        mintedIds,
-        notMintedIds,
       });
     }
     return result;

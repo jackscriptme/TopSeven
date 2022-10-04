@@ -1,8 +1,24 @@
+import { useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
-const PlayerCard = ({ player }) => {
-  const { name, image, position, stats, team, notMintedIds } = player;
-  const remaining = notMintedIds.length;
+const PlayerCard = ({ player, tokenMintedIds, mintNFT }) => {
+  const navigate = useNavigate();
+  const { id, name, image, position, price, stats, team } = player;
+
+  const isDetail = useMemo(() => !!mintNFT, [mintNFT]);
+  const soldOut = useMemo(
+    () => (tokenMintedIds || []).includes(id),
+    [id, tokenMintedIds]
+  );
+
+  const view = useCallback(() => {
+    navigate(`/market/players?name=${name}`);
+  }, [name]);
+
+  const mint = useCallback(() => {
+    mintNFT(id, price);
+  }, [id, price, mintNFT]);
 
   return (
     <Box
@@ -49,27 +65,13 @@ const PlayerCard = ({ player }) => {
         >
           {name}
         </Typography>
-        <Typography
-          align="center"
-          fontWeight={700}
-          fontSize={11}
-          color="success.main"
-          textTransform="uppercase"
-          sx={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {remaining} left
-        </Typography>
       </Box>
       <Box>
         <Grid container spacing={0.5}>
           <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Box>
               {['sho', 'dri', 'pac'].map((key) => (
-                <Box display="flex" gap={1}>
+                <Box key={key} display="flex" gap={1}>
                   <Typography
                     fontSize={12}
                     fontWeight={700}
@@ -91,7 +93,7 @@ const PlayerCard = ({ player }) => {
           <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Box>
               {['def', 'pas', 'phy'].map((key) => (
-                <Box display="flex" gap={1}>
+                <Box key={key} display="flex" gap={1}>
                   <Typography
                     fontSize={12}
                     fontWeight={700}
@@ -115,7 +117,7 @@ const PlayerCard = ({ player }) => {
       <Box>
         <Button
           size="small"
-          disabled={!remaining}
+          disabled={soldOut}
           sx={{
             textTransform: 'uppercase',
             fontSize: 12,
@@ -129,8 +131,13 @@ const PlayerCard = ({ player }) => {
               color: 'success.main',
             },
           }}
+          onClick={isDetail ? mint : view}
         >
-          {!remaining ? 'Sold out' : `Buy with ${player.price / 1e18} MATIC`}
+          {isDetail
+            ? soldOut
+              ? 'Sold out'
+              : `Buy with ${price / 1e18} MATIC`
+            : 'View'}
         </Button>
       </Box>
     </Box>

@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import web3 from 'web3';
 import { ethers } from 'ethers';
+import { httpsCallable } from 'firebase/functions';
 
 import environments from '../utils/environments';
+import { functions } from '../configs/firebase.config';
 import Token from '../abis/TopSevenPlayer.json';
 
 const { NETWORK_ID: networkId, TOKEN_CONTRACT_ADDRESS: tokenContractAddress } =
@@ -94,27 +96,31 @@ const useAccount = () => {
   }, []);
 
   const mintNFT = useCallback(
-    async (tokenId) => {
+    async (tokenId, price) => {
       if (!account) return;
 
       setIsMinting(true);
       try {
         const contract = getContract();
         if (contract) {
-          // const test = await tokenContract.balanceOf(account);
-          // console.log({ test: test.toString() });
-          // const txn = await tokenContract.safeMint(account, 1000, {
-          //   value: ethers.utils.parseEther('1'),
-          // });
-          // await txn.wait();
-          // console.log(txn.hash);
+          const isFreeMint = await contract.IS_FREE_MINT();
+          const value = isFreeMint ? '0' : `${price}`;
+          const transaction = await contract.safeMint(account, tokenId, {
+            value,
+          });
+          const result = await transaction.wait();
+          if (result?.status === 1) {
+            const updateOwner = httpsCallable(functions, 'updateOwner');
+            await updateOwner({ playerId: tokenId });
+            await getMintedIds();
+          }
         }
       } catch (err) {
         console.error(err);
       }
       setIsMinting(false);
     },
-    [account]
+    [account, getMintedIds]
   );
 
   const init = useCallback(async () => {
