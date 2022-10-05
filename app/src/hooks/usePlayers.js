@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { query, collection, onSnapshot, orderBy } from 'firebase/firestore';
 
 import { firestore } from '../configs/firebase.config';
 
-const usePlayers = () => {
+const usePlayers = (userId) => {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
@@ -13,6 +13,7 @@ const usePlayers = () => {
       collection(firestore, 'players'),
       orderBy('stats.overall', 'desc')
     );
+
     unsubcribe = onSnapshot(q, (snapshot) => {
       const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setPlayers(docs);
@@ -21,7 +22,12 @@ const usePlayers = () => {
     return () => unsubcribe && unsubcribe();
   }, []);
 
-  return { players };
+  const userPlayers = useMemo(
+    () => players.filter((player) => player.owner === userId),
+    [players, userId]
+  );
+
+  return { players, userPlayers };
 };
 
 export default usePlayers;
